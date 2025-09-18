@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+
+    <title>My Gym App</title>
+</head>
+<body>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h1>Welcome, {{ user.username|title }}!</h1>
+    <p>Today is {{ date }}</p>
+
+    {% if active_split %}
+        <h2>Your Active Split: {{ active_split.name }}</h2>
+        <h3>Select your Workout Day:</h3>
+        <ul>
+            {% for day in days %}
+                <li>
+                    <form method="GET" action="#">
+                        <button type="submit">{{ day.name }}</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No active workout split found. Please activate one in the splits panel.</p>
+        <p>Don't know where to start? Select one of our predefined splits here!</p>
+            <form method="post" action="{% url 'select_split_from_dropdown' %}">
+            {% csrf_token %}
+            <label for="split">Choose your workout split:</label>
+            <select name="split_id" id="split" required>
+                <option disabled selected>-- Choose a Split --</option>
+                {% for split in template_splits %}
+                <option value="{{ split.id }}">{{ split.name }}</option>
+                {% empty %}
+                <option disabled>No splits available</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Start</button>
+            </form>
+
+
+
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Sentence analyzer</title>
+    </head>
+    <body>
+        <h1>Analyze sentnce</h1>
+
+        <form method = "POST">
+            {% csrf_token %}
+            <input type = "text" name = "name" placeholder = "Enter your name">
+            <input type = "se" sentence = "sentence">
+        </form>
+
+        {% if text is not None%}
+        {% if len_sentence is not None%}
+            <p>Hello {{name}}! Your sentence has {{sentence}} words.</p>
+        {% endif %}
+        {% endif %}
+    </body>
+</html>
